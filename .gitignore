@@ -15,12 +15,6 @@ obj/
 *.userosscache
 *.sln.docstates
 
-# ASP.NET Core specific
-appsettings.json
-appsettings.Development.json
-appsettings.Local.json
-appsettings.*.json
-
 # Entity Framework migration files
 Migrations/
 
