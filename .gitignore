@@ -1,0 +1,89 @@
+# Compiled object files
+*.o
+*.obj
+
+# Build folders
+bin/
+obj/
+
+# Visual Studio Code folders
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Core specific
+appsettings.json
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+
+# Entity Framework migration files
+Migrations/
+
+# Logs
+*.log
+logs/
+
+# Temp files
+*.tmp
+*.temp
+*.bak
+*.old
+
+# IDE files
+*.ide
+*.idea/
+
+# Crash reports and debug logs
+crash.log
+debug.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dependency folders
+node_modules/
+packages/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+*.DotSettings
+
+# Visual Studio
+*.vs/
+.vs/
+
+# Test Results
+TestResults/
+
+# Coverage Reports
+coverage/
+*.coverage
+*.coveragexml
+
+# Publish Output
+wwwroot/
+dist/
+publish/
+
+# Git Secrets
+secrets.json
+
+# Generated Files
+*.generated.cs
