@@ -1,5 +1,4 @@
 ﻿using APITransfer.Data;
-using APITransfer.Interfaces;
 using APITransfer.Interfaces.Repositories;
 using APITransfer.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,7 @@ namespace APITransfer.Repositories
             _context = context;
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByIdAsync(int id)
         {
             Console.WriteLine($"Fetching user by email: {email}"); // Registro del intento
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);

@@ -13,14 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Agregar AuthService al contenedor de dependencias
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-// Agregar IUserRepository si no lo has registrado aún
+// Agregar IUserRepository si no lo has registrado aï¿½n
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Configurar DbContext con SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configurar autenticación JWT
+// Configurar autenticaciï¿½n JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -35,6 +35,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Registrar repositorios
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -44,7 +47,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseAuthentication(); // Asegúrate de agregar esta línea
+app.UseAuthentication(); // Asegï¿½rate de agregar esta lï¿½nea
 app.UseAuthorization();
 
 app.MapControllers();
