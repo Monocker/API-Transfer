@@ -18,6 +18,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IZoneRepository, ZoneRepository>();
 builder.Services.AddScoped<IAgencyRepository, AgencyRepository>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
+builder.Services.AddScoped<IUnitRepository, UnitRepository>();
+
 
 
 // Configurar DbContext con SQL Server

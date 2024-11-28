@@ -14,6 +14,7 @@ namespace APITransfer.Data
         public DbSet<Zone> Zones { get; set; }
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Unit> Units { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,6 +28,16 @@ namespace APITransfer.Data
 
             modelBuilder.Entity<Role>()
                 .Property(r => r.Id)
+                .HasDefaultValueSql("NEWID()");
+
+            // Configuración para la columna PricePerSeat en la tabla Units
+            modelBuilder.Entity<Unit>()
+                .Property(u => u.PricePerSeat)
+                .HasColumnType("decimal(10,2)"); // Precisión 10, Escala 2
+
+            // Configurar generación automática de Guid
+            modelBuilder.Entity<Unit>()
+                .Property(u => u.Id)
                 .HasDefaultValueSql("NEWID()");
         }
 
