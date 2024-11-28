@@ -5,7 +5,7 @@ namespace APITransfer.Models
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; } // Debe ser Guid
 
         [Required]
         [MaxLength(100)]
@@ -18,6 +18,7 @@ namespace APITransfer.Models
         [Required]
         public string Password { get; set; }
 
-        public string Role { get; set; } // "Admin" or "Represente"
+        [Required]
+        public Guid RoleId { get; set; } // Debe ser Guid
     }
 }

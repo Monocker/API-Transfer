@@ -2,8 +2,8 @@
 using APITransfer.Interfaces.Repositories;
 using APITransfer.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace APITransfer.Repositories
 {
@@ -16,28 +16,23 @@ namespace APITransfer.Repositories
             _context = context;
         }
 
-        // Obtener usuario por ID
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<User> GetUserByIdAsync(Guid id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        // Obtener todos los usuarios
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users.ToListAsync();
         }
 
-        // Agregar usuario
         public async Task AddUserAsync(User user)
         {
-            Console.WriteLine($"Adding user to database: {user.Email}"); // Registro del intento
+            user.Password = HashPassword(user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            Console.WriteLine($"User added to database: {user.Email}"); // Registro de éxito
         }
 
-        // Actualizar usuario
         public async Task UpdateUserAsync(User user)
         {
             var existingUser = await _context.Users.FindAsync(user.Id);
@@ -45,16 +40,16 @@ namespace APITransfer.Repositories
             {
                 existingUser.Name = user.Name;
                 existingUser.Email = user.Email;
-                existingUser.Password = user.Password;
-                existingUser.Role = user.Role;
+                if (!string.IsNullOrEmpty(user.Password))
+                    existingUser.Password = HashPassword(user.Password);
+                existingUser.RoleId = user.RoleId;
 
                 _context.Users.Update(existingUser);
                 await _context.SaveChangesAsync();
             }
         }
 
-        // Eliminar usuario
-        public async Task DeleteUserAsync(int id)
+        public async Task DeleteUserAsync(Guid id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user != null)
@@ -64,10 +59,16 @@ namespace APITransfer.Repositories
             }
         }
 
-        // Obtener usuario por email
         public async Task<User> GetUserByEmailAsync(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        private string HashPassword(string password)
+        {
+            using var sha256 = SHA256.Create();
+            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hashedBytes);
         }
     }
 }

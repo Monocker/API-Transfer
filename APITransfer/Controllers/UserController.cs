@@ -1,4 +1,5 @@
-﻿using APITransfer.Helpers;
+﻿using APITransfer.DTOs;
+using APITransfer.Helpers;
 using APITransfer.Interfaces.Repositories;
 using APITransfer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -17,60 +18,63 @@ namespace APITransfer.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(int id)
+        public async Task<IActionResult> GetUserById(Guid id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
-                return NotFound(new ResponseHelper<string>(false, "User not found"));
+                return NotFound(new ResponseHelper<string>(false, "Usuario no encontrado"));
 
-            return Ok(new ResponseHelper<User>(true, "User retrieved successfully", user));
+            return Ok(new ResponseHelper<User>(true, "Usuario recuperado con éxito", user));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userRepository.GetAllUsersAsync();
-            return Ok(new ResponseHelper<IEnumerable<User>>(true, "Users retrieved successfully", users));
+            return Ok(new ResponseHelper<IEnumerable<User>>(true, "Usuarios recuperados con éxito", users));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] User user)
+        public async Task<IActionResult> CreateUser([FromBody] User userDto)
         {
             if (!ModelState.IsValid)
-                return BadRequest(new ResponseHelper<string>(false, "Invalid data"));
+                return BadRequest(new ResponseHelper<string>(false, "Datos inválidos"));
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(), 
+                Name = userDto.Name,
+                Email = userDto.Email,
+                Password = userDto.Password, // Aquí deberías aplicar el hash de la contraseña
+                RoleId = userDto.RoleId
+            };
 
             await _userRepository.AddUserAsync(user);
-            return Ok(new ResponseHelper<User>(true, "User created successfully", user));
+
+            return Ok(new ResponseHelper<User>(true, "Usuario creado con éxito", user));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] User user)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(new ResponseHelper<string>(false, "Invalid data"));
-
             var existingUser = await _userRepository.GetUserByIdAsync(id);
             if (existingUser == null)
-                return NotFound(new ResponseHelper<string>(false, "User not found"));
+                return NotFound(new ResponseHelper<string>(false, "Usuario no encontrado"));
 
-            existingUser.Name = user.Name;
-            existingUser.Email = user.Email;
-            existingUser.Password = user.Password;
-            existingUser.Role = user.Role;
-
-            await _userRepository.UpdateUserAsync(existingUser);
-            return Ok(new ResponseHelper<User>(true, "User updated successfully", existingUser));
+            user.Id = id;
+            await _userRepository.UpdateUserAsync(user);
+            return Ok(new ResponseHelper<User>(true, "Usuario actualizado con éxito", user));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(Guid id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
             if (user == null)
-                return NotFound(new ResponseHelper<string>(false, "User not found"));
+                return NotFound(new ResponseHelper<string>(false, "Usuario no encontrado"));
 
             await _userRepository.DeleteUserAsync(id);
-            return Ok(new ResponseHelper<string>(true, "User deleted successfully"));
+            return Ok(new ResponseHelper<string>(true, "Usuario eliminado con éxito"));
         }
     }
 }
