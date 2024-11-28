@@ -15,6 +15,10 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Agregar IUserRepository si no lo has registrado a�n
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IZoneRepository, ZoneRepository>();
+builder.Services.AddScoped<IAgencyRepository, AgencyRepository>();
+builder.Services.AddScoped<IHotelRepository, HotelRepository>();
+
 
 // Configurar DbContext con SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

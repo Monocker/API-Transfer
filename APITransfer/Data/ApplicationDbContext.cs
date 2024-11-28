@@ -11,6 +11,10 @@ namespace APITransfer.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
 
+        public DbSet<Zone> Zones { get; set; }
+        public DbSet<Agency> Agencies { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
