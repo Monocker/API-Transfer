@@ -16,6 +16,8 @@ namespace APITransfer.Data
         public DbSet<Unit> Units { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Store> Stores { get; set; }
+        public DbSet<Pickup> Pickups { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
