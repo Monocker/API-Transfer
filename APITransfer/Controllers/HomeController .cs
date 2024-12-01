@@ -14,13 +14,18 @@ namespace APITransfer.Controllers
         private readonly IHotelRepository _hotelRepository;
         private readonly IUnitRepository _unitRepository;
         private readonly IZoneRepository _zoneRepository;
+        private readonly IPickupRepository _pickupRepository;
+        private readonly IStoreRepository _storeRepository;
+
 
         public HomeController(
             IHomeRepository homeRepository, 
             IAgencyRepository agencyRepository, 
             IHotelRepository hotelRepository,
             IUnitRepository unitRepository,
-            IZoneRepository zoneRepository
+            IZoneRepository zoneRepository,
+            IPickupRepository pickupRepository,
+            IStoreRepository storeRepository
             )
 
         {
@@ -29,6 +34,8 @@ namespace APITransfer.Controllers
             _hotelRepository = hotelRepository;
             _unitRepository = unitRepository;
             _zoneRepository = zoneRepository;
+            _pickupRepository = pickupRepository;
+            _storeRepository = storeRepository;
         }
 
         [HttpGet("get-all-info")]
@@ -40,13 +47,17 @@ namespace APITransfer.Controllers
                 var hotels = await _hotelRepository.GetAllHotelsAsync();
                 var units = await _unitRepository.GetAllUnitsAsync();
                 var zones = await _zoneRepository.GetAllZonesAsync();
+                var pickups = await _pickupRepository.GetAllPickupsAsync();
+                var stores = await _storeRepository.GetAllStoresAsync();
 
                 var response = new
                 {
                     Agencies = agencies,
                     Hotels = hotels,
+                    Stores = stores,
                     Units = units,
-                    Zones = zones
+                    Zones = zones,
+                    Pickups = pickups
                 };
 
                 return Ok(new ResponseHelper<object>(true, "Información recuperada con éxito", response));
