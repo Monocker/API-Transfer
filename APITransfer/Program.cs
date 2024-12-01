@@ -19,6 +19,8 @@ builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IHomeRepository, HomeRepository>();
+builder.Services.AddScoped<IStoreRepository, StoreRepository>();
+
 
 
 // Configuración del contexto de base de datos
