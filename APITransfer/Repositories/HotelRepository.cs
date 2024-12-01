@@ -1,4 +1,5 @@
 ﻿using APITransfer.Data;
+using APITransfer.DTOs;
 using APITransfer.Interfaces.Repositories;
 using APITransfer.Models;
 using Microsoft.EntityFrameworkCore;
@@ -19,13 +20,13 @@ namespace APITransfer.Repositories
         // Obtener todos los hoteles
         public async Task<IEnumerable<Hotel>> GetAllHotelsAsync()
         {
-            return await _context.Hotels.Include(h => h.Zone).ToListAsync();
+            return await _context.Hotels.ToListAsync();
         }
 
         // Obtener hotel por ID
         public async Task<Hotel> GetHotelByIdAsync(Guid id)
         {
-            return await _context.Hotels.Include(h => h.Zone).FirstOrDefaultAsync(h => h.Id == id);
+            return await _context.Hotels.FirstOrDefaultAsync(h => h.Id == id);
         }
 
         // Agregar un nuevo hotel

@@ -1,4 +1,5 @@
-﻿using APITransfer.Helpers;
+﻿using APITransfer.DTOs;
+using APITransfer.Helpers;
 using APITransfer.Interfaces.Repositories;
 using APITransfer.Models;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,5 @@
-﻿using APITransfer.Models;
+﻿using APITransfer.DTOs;
+using APITransfer.Models;
 
 namespace APITransfer.Interfaces.Repositories
 {

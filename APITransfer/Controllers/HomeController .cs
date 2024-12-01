@@ -10,10 +10,25 @@ namespace APITransfer.Controllers
     public class HomeController : ControllerBase
     {
         private readonly IHomeRepository _homeRepository;
+        private readonly IAgencyRepository _agencyRepository;
+        private readonly IHotelRepository _hotelRepository;
+        private readonly IUnitRepository _unitRepository;
+        private readonly IZoneRepository _zoneRepository;
 
-        public HomeController(IHomeRepository homeRepository)
+        public HomeController(
+            IHomeRepository homeRepository, 
+            IAgencyRepository agencyRepository, 
+            IHotelRepository hotelRepository,
+            IUnitRepository unitRepository,
+            IZoneRepository zoneRepository
+            )
+
         {
             _homeRepository = homeRepository;
+            _agencyRepository = agencyRepository;
+            _hotelRepository = hotelRepository;
+            _unitRepository = unitRepository;
+            _zoneRepository = zoneRepository;
         }
 
         [HttpGet("get-all-info")]
@@ -21,10 +36,10 @@ namespace APITransfer.Controllers
         {
             try
             {
-                var agencies = await _homeRepository.GetAllAgenciesAsync();
-                var hotels = await _homeRepository.GetAllHotelsAsync();
-                var units = await _homeRepository.GetAllUnitsAsync();
-                var zones = await _homeRepository.GetAllZonesAsync();
+                var agencies = await _agencyRepository.GetAllAgenciesAsync();
+                var hotels = await _hotelRepository.GetAllHotelsAsync();
+                var units = await _unitRepository.GetAllUnitsAsync();
+                var zones = await _zoneRepository.GetAllZonesAsync();
 
                 var response = new
                 {
