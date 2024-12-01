@@ -2,8 +2,6 @@
 using APITransfer.Interfaces.Repositories;
 using APITransfer.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace APITransfer.Repositories
 {
@@ -28,7 +26,6 @@ namespace APITransfer.Repositories
 
         public async Task AddUserAsync(User user)
         {
-            user.Password = HashPassword(user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
@@ -40,8 +37,10 @@ namespace APITransfer.Repositories
             {
                 existingUser.Name = user.Name;
                 existingUser.Email = user.Email;
+
                 if (!string.IsNullOrEmpty(user.Password))
-                    existingUser.Password = HashPassword(user.Password);
+                    existingUser.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
                 existingUser.RoleId = user.RoleId;
 
                 _context.Users.Update(existingUser);
@@ -62,13 +61,6 @@ namespace APITransfer.Repositories
         public async Task<User> GetUserByEmailAsync(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        }
-
-        private string HashPassword(string password)
-        {
-            using var sha256 = SHA256.Create();
-            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-            return Convert.ToBase64String(hashedBytes);
         }
     }
 }
