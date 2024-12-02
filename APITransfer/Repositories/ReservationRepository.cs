@@ -73,12 +73,14 @@ namespace APITransfer.Repositories
         }
 
 
-        public async Task<IEnumerable<Reservation>> GetReservationsByUnitAndPickup(Guid unitId, string pickupTime, DateTime reservationDate)
+        public async Task<IEnumerable<Reservation>> GetReservationsByUnitAndPickup(Guid unitId, string pickupTime, DateTime reservationDate, Guid hotelId)
         {
             return await _context.Reservations
                 .Where(r => r.UnitId == unitId
                             && r.PickupTime == pickupTime
-                            && r.ReservationDate.Date == reservationDate.Date)
+                            && r.ReservationDate.Date == reservationDate.Date
+                            && r.HotelId == hotelId
+                            )
                 .ToListAsync();
         }
 
