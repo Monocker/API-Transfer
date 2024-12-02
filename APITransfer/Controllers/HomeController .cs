@@ -73,7 +73,7 @@ namespace APITransfer.Controllers
         }
 
         [HttpGet("unit-availability")]
-        public async Task<IActionResult> GetUnitAvailability(Guid unitId, string pickupTime, DateTime reservationDate)
+        public async Task<IActionResult> GetUnitAvailability(Guid unitId, string pickupTime, DateTime reservationDate, Guid hotelId)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace APITransfer.Controllers
                     return NotFound(new ResponseHelper<string>(false, "Unidad no encontrada"));
 
                 // Consultar las reservas para la unidad, hora y fecha específicas
-                var reservations = await _reservationRepository.GetReservationsByUnitAndPickup(unitId, pickupTime, reservationDate);
+                var reservations = await _reservationRepository.GetReservationsByUnitAndPickup(unitId, pickupTime, reservationDate, hotelId);
 
                 // Calcular estadísticas
                 var totalSeats = unit.SeatCount; // Ejemplo: suponiendo que la unidad tiene este campo

@@ -13,7 +13,7 @@ namespace APITransfer.Interfaces.Repositories
         Task UpdateReservationAsync(Reservation reservation);
         Task DeleteReservationAsync(Guid id);
         Task<bool> IsSeatAvailable(Guid unitId, int seatNumber, string pickupTime);
-        Task<IEnumerable<Reservation>> GetReservationsByUnitAndPickup(Guid unitId, string pickupTime, DateTime reservationDate);
+        Task<IEnumerable<Reservation>> GetReservationsByUnitAndPickup(Guid unitId, string pickupTime, DateTime reservationDate, Guid hotelId);
 
     }
 }
