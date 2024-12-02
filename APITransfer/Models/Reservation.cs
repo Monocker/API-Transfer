@@ -32,10 +32,11 @@ namespace APITransfer.Models
         public int SeatNumber { get; set; } // Número del asiento reservado
 
         [Required]
-        public DateTime PickupTime { get; set; } // Hora de recogida
+        [MaxLength(5)] // HH:mm
+        public string PickupTime { get; set; } // Hora en formato HH:mm
 
         [Required]
-        public DateTime ReservationDate { get; set; } // Fecha de reserva
+        public DateTime ReservationDate { get; set; } // Solo día, mes y año
 
         [Required]
         [MaxLength(100)]
@@ -60,5 +61,8 @@ namespace APITransfer.Models
         [Required]
         [MaxLength(50)]
         public string Status { get; set; } // Estado de la reserva (Pagado, Pendiente, etc.)
+
+        [Required]
+        public int Cupon { get; set; }
     }
 }

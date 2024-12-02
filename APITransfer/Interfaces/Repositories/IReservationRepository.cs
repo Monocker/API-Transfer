@@ -12,6 +12,8 @@ namespace APITransfer.Interfaces.Repositories
         Task AddReservationAsync(Reservation reservation);
         Task UpdateReservationAsync(Reservation reservation);
         Task DeleteReservationAsync(Guid id);
-        Task<bool> IsSeatAvailable(Guid unitId, int seatNumber, DateTime pickupTime);
+        Task<bool> IsSeatAvailable(Guid unitId, int seatNumber, string pickupTime);
+        Task<IEnumerable<Reservation>> GetReservationsByUnitAndPickup(Guid unitId, string pickupTime, DateTime reservationDate);
+
     }
 }

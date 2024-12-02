@@ -11,8 +11,8 @@ namespace APITransfer.DTOs
         public Guid HotelId { get; set; }
         public Guid UnitId { get; set; }
         public int SeatNumber { get; set; }
-        public DateTime PickupTime { get; set; }
-        public DateTime ReservationDate { get; set; }
+        public string PickupTime { get; set; } // Cambiado a string para almacenar solo HH:mm
+        public DateTime ReservationDate { get; set; } // Día, mes y año
         public string ClientName { get; set; }
         public string Observations { get; set; }
         public Guid StoreId { get; set; }
@@ -20,5 +20,6 @@ namespace APITransfer.DTOs
         public int Adults { get; set; }
         public int Children { get; set; }
         public string Status { get; set; }
+        public int Cupon { get; set; }
     }
 }

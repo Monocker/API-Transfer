@@ -58,6 +58,10 @@ namespace APITransfer.Controllers
             if (!isSeatAvailable)
                 return BadRequest(new ResponseHelper<string>(false, "Seat is already reserved for the specified time"));
 
+            // Formatear PickupTime y ReservationDate
+            string formattedPickupTime = DateTime.Parse(reservationDto.PickupTime).ToString("HH:mm");
+            DateTime formattedReservationDate = reservationDto.ReservationDate.Date; // Solo día, mes, año
+
             var reservation = new Reservation
             {
                 UserId = reservationDto.UserId,
@@ -66,19 +70,21 @@ namespace APITransfer.Controllers
                 HotelId = reservationDto.HotelId,
                 UnitId = reservationDto.UnitId,
                 SeatNumber = reservationDto.SeatNumber,
-                PickupTime = reservationDto.PickupTime,
-                ReservationDate = reservationDto.ReservationDate,
+                PickupTime = formattedPickupTime,
+                ReservationDate = formattedReservationDate,
                 ClientName = reservationDto.ClientName,
                 Observations = reservationDto.Observations,
                 StoreId = reservationDto.StoreId,
                 Pax = reservationDto.Pax,
                 Adults = reservationDto.Adults,
                 Children = reservationDto.Children,
-                Status = reservationDto.Status
+                Status = reservationDto.Status,
+                Cupon = reservationDto.Cupon
             };
 
             await _reservationRepository.AddReservationAsync(reservation);
             return Ok(new ResponseHelper<string>(true, "Reservation added successfully"));
         }
+
     }
 }

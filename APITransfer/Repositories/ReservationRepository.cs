@@ -64,12 +64,25 @@ namespace APITransfer.Repositories
             }
         }
 
-        public async Task<bool> IsSeatAvailable(Guid unitId, int seatNumber, DateTime pickupTime)
+        public async Task<bool> IsSeatAvailable(Guid unitId, int seatNumber, string pickupTime)
         {
             return !await _context.Reservations.AnyAsync(r =>
                 r.UnitId == unitId &&
                 r.SeatNumber == seatNumber &&
-                r.PickupTime.Date == pickupTime.Date);
+                r.PickupTime == pickupTime); // Comparar directamente el string
         }
+
+
+        public async Task<IEnumerable<Reservation>> GetReservationsByUnitAndPickup(Guid unitId, string pickupTime, DateTime reservationDate)
+        {
+            return await _context.Reservations
+                .Where(r => r.UnitId == unitId
+                            && r.PickupTime == pickupTime
+                            && r.ReservationDate.Date == reservationDate.Date)
+                .ToListAsync();
+        }
+
+
+
     }
 }

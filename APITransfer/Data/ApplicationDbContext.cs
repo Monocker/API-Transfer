@@ -93,6 +93,16 @@ namespace APITransfer.Data
                 .HasIndex(r => new { r.UnitId, r.SeatNumber, r.PickupTime })
                 .IsUnique()
                 .HasDatabaseName("IX_Reservation_SeatAvailability");
+
+            modelBuilder.Entity<Reservation>()
+    .Property(r => r.PickupTime)
+    .HasMaxLength(5) // HH:mm
+    .IsRequired();
+
+            modelBuilder.Entity<Reservation>()
+                .Property(r => r.ReservationDate)
+                .IsRequired();
+
         }
     }
 }
