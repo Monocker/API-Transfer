@@ -43,5 +43,22 @@ namespace APITransfer.Models
 
         [MaxLength(500)]
         public string Observations { get; set; } // Observaciones adicionales
+
+        [Required]
+        public Guid StoreId { get; set; } // FK a Store
+        public Store Store { get; set; }
+
+        [Required]
+        public int Pax { get; set; } // Número total de pasajeros
+
+        [Required]
+        public int Adults { get; set; } // Número de adultos
+
+        [Required]
+        public int Children { get; set; } // Número de niños
+
+        [Required]
+        [MaxLength(50)]
+        public string Status { get; set; } // Estado de la reserva (Pagado, Pendiente, etc.)
     }
 }

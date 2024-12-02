@@ -15,5 +15,10 @@ namespace APITransfer.DTOs
         public DateTime ReservationDate { get; set; }
         public string ClientName { get; set; }
         public string Observations { get; set; }
+        public Guid StoreId { get; set; }
+        public int Pax { get; set; }
+        public int Adults { get; set; }
+        public int Children { get; set; }
+        public string Status { get; set; }
     }
 }

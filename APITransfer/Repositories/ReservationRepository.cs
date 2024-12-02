@@ -26,6 +26,7 @@ namespace APITransfer.Repositories
                 .Include(r => r.Agency)
                 .Include(r => r.Hotel)
                 .Include(r => r.Unit)
+                .Include(r => r.Store)
                 .ToListAsync();
         }
 
@@ -37,6 +38,7 @@ namespace APITransfer.Repositories
                 .Include(r => r.Agency)
                 .Include(r => r.Hotel)
                 .Include(r => r.Unit)
+                .Include(r => r.Store)
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 

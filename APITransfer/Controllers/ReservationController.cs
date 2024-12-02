@@ -37,35 +37,15 @@ namespace APITransfer.Controllers
                 PickupTime = r.PickupTime,
                 ReservationDate = r.ReservationDate,
                 ClientName = r.ClientName,
-                Observations = r.Observations
+                Observations = r.Observations,
+                StoreId = r.StoreId,
+                Pax = r.Pax,
+                Adults = r.Adults,
+                Children = r.Children,
+                Status = r.Status
             });
 
             return Ok(new ResponseHelper<IEnumerable<ReservationDto>>(true, "Reservations retrieved successfully", reservationDtos));
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetReservationById(Guid id)
-        {
-            var reservation = await _reservationRepository.GetReservationByIdAsync(id);
-            if (reservation == null)
-                return NotFound(new ResponseHelper<string>(false, "Reservation not found"));
-
-            var reservationDto = new ReservationDto
-            {
-                Id = reservation.Id,
-                UserId = reservation.UserId,
-                ZoneId = reservation.ZoneId,
-                AgencyId = reservation.AgencyId,
-                HotelId = reservation.HotelId,
-                UnitId = reservation.UnitId,
-                SeatNumber = reservation.SeatNumber,
-                PickupTime = reservation.PickupTime,
-                ReservationDate = reservation.ReservationDate,
-                ClientName = reservation.ClientName,
-                Observations = reservation.Observations
-            };
-
-            return Ok(new ResponseHelper<ReservationDto>(true, "Reservation retrieved successfully", reservationDto));
         }
 
         [HttpPost]
@@ -89,7 +69,12 @@ namespace APITransfer.Controllers
                 PickupTime = reservationDto.PickupTime,
                 ReservationDate = reservationDto.ReservationDate,
                 ClientName = reservationDto.ClientName,
-                Observations = reservationDto.Observations
+                Observations = reservationDto.Observations,
+                StoreId = reservationDto.StoreId,
+                Pax = reservationDto.Pax,
+                Adults = reservationDto.Adults,
+                Children = reservationDto.Children,
+                Status = reservationDto.Status
             };
 
             await _reservationRepository.AddReservationAsync(reservation);
