@@ -109,5 +109,24 @@ namespace APITransfer.Controllers
         }
 
 
+        [HttpGet("user-reservations/{userId}")]
+        public async Task<IActionResult> GetUserReservations(Guid userId)
+        {
+            try
+            {
+                var reservations = await _reservationRepository.GetReservationsByUserAsync(userId);
+
+                if (!reservations.Any())
+                    return NotFound(new ResponseHelper<string>(false, "No reservations found for this user."));
+
+                return Ok(new ResponseHelper<IEnumerable<ReservationDetailDto>>(true, "Reservations retrieved successfully", reservations));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseHelper<string>(false, "Error retrieving reservations", ex.Message));
+            }
+        }
+
+
     }
 }

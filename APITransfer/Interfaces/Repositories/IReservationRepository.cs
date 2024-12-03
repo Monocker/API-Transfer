@@ -1,7 +1,10 @@
-﻿using APITransfer.Models;
+﻿using APITransfer.DTOs;
+using APITransfer.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+
 
 namespace APITransfer.Interfaces.Repositories
 {
@@ -14,6 +17,8 @@ namespace APITransfer.Interfaces.Repositories
         Task DeleteReservationAsync(Guid id);
         Task<bool> IsSeatAvailable(Guid unitId, int seatNumber, string pickupTime);
         Task<IEnumerable<Reservation>> GetReservationsByUnitAndPickup(Guid unitId, string pickupTime, DateTime reservationDate, Guid hotelId);
+        Task<IEnumerable<ReservationDetailDto>> GetReservationsByUserAsync(Guid userId);
+
 
     }
 }

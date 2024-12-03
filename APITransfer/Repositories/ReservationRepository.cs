@@ -1,4 +1,5 @@
 ﻿using APITransfer.Data;
+using APITransfer.DTOs;
 using APITransfer.Interfaces.Repositories;
 using APITransfer.Models;
 using Microsoft.EntityFrameworkCore;
@@ -81,6 +82,33 @@ namespace APITransfer.Repositories
                             && r.ReservationDate.Date == reservationDate.Date
                             && r.HotelId == hotelId
                             )
+                .ToListAsync();
+        }
+
+
+        public async Task<IEnumerable<ReservationDetailDto>> GetReservationsByUserAsync(Guid userId)
+        {
+            return await _context.Reservations
+                .Where(r => r.UserId == userId)
+                .Select(r => new ReservationDetailDto
+                {
+                    Id = r.Id,
+                    ZoneName = r.Zone.Name,
+                    AgencyName = r.Agency.Name,
+                    HotelName = r.Hotel.Name,
+                    UnitName = r.Unit.Name,
+                    StoreName = r.Store.Name,
+                    SeatNumber = r.SeatNumber,
+                    PickupTime = r.PickupTime,
+                    ReservationDate = r.ReservationDate,
+                    ClientName = r.ClientName,
+                    Observations = r.Observations,
+                    Pax = r.Pax,
+                    Adults = r.Adults,
+                    Children = r.Children,
+                    Status = r.Status,
+                    Cupon = r.Cupon
+                })
                 .ToListAsync();
         }
 
